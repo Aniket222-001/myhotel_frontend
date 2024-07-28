@@ -15,7 +15,7 @@ import ProfilePage from './Pages/ProfilePage';
 import Placepage from './Pages/MyPlacepage'
 import MyfavouriteList from './Myfav';
 
-axios.defaults.baseURL = "https://myhotel-xc2g.vercel.app"
+axios.defaults.baseURL = "https://myhotelserver-qgmu.vercel.app"
 axios.defaults.withCredentials = true
 
 function App() {
