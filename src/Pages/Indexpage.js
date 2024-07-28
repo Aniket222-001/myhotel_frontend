@@ -52,7 +52,7 @@ export default function Indexpage() {
   const filteredPlaces = selectedOption === 'All' ? places : places.filter(place => place.selectedOption === selectedOption);
 
   return (
-    <div className="mx-2 ml-2">
+    <div className="mx-4 ml-2">
       <div className="text-center mb-4">
         <button
           onClick={() => handleOptionChange('All')}
