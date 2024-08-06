@@ -7,7 +7,7 @@ export default function MyfavouriteList(){
          <div className="text-center p-6 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold mb-4 text-gray-800">Under Maintenance</h1>
         <p className="text-lg text-gray-600 mb-6">
-          Our website is currently undergoing scheduled maintenance. We apologize for any inconvenience. Please check back later.
+          This page is currently under devlopment. Please check back later.
         </p>
         <div className="flex justify-center">
           <img
@@ -17,7 +17,7 @@ export default function MyfavouriteList(){
           />
         </div>
         <p className="text-sm text-gray-500">
-          If you need immediate assistance, please contact us at <a href="mailto:support@example.com" className="text-primary hover:underline">support@example.com</a>
+          If you need immediate assistance, please contact us at <a href="aniketkushwahadtu0408@gmail.com" className="text-primary hover:underline">support@gmail.com</a>
         </p>
       </div>
     </div>
