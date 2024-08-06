@@ -73,7 +73,7 @@ export default function PlacesFormPage() {
     };
     if (id) {
       // update
-      if(user.email === 'aniket@gmail.com'){
+      if(user.email === 'Aniket@gmail.com'){
       await axios.put('/places', {
         id, ...placeData
       });
@@ -81,7 +81,7 @@ export default function PlacesFormPage() {
       setRedirect(true);
     } else {
       // new place
-      if(user.email === 'aniket@gmail.com'){
+      if(user.email === 'Aniket@gmail.com'){
       await axios.post('/places', placeData);
       }
       setRedirect(true);
@@ -178,10 +178,10 @@ export default function PlacesFormPage() {
       className="primary my-4"
       onClick={(ev) => {
     ev.preventDefault();
-    if (user.email === 'aniket@gmail.com' || user.role === 'admin') {
+    if (user.email === 'Aniket@gmail.com' || user.role === 'admin') {
       savePlace(ev);
     } else {
-      alert('Only aniket@gmail.com or an admin can save this form.');
+      alert('Only admin can save and update this form.');
     }
   }}
 >
