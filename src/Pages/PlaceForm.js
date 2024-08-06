@@ -1,234 +1,56 @@
 
-// import PhotosUploader from "../PhotosUpload.js";
-// import Perks from "../Perks.js";
-// import {useEffect, useState} from "react";
-// import axios from "axios";
-// import AccountNav from "../AccountNav";
-// import {Navigate, useParams} from "react-router-dom";
-
-// export default function PlacesFormPage() {
-//   const {id} = useParams();
-//   const [title,setTitle] = useState('');
-//   const [address,setAddress] = useState('');
-//   const [addedPhotos,setAddedPhotos] = useState([]);
-//   const [description,setDescription] = useState('');
-//   const [perks,setPerks] = useState([]);
-//   const [extraInfo,setExtraInfo] = useState('');
-//   const [checkIn,setCheckIn] = useState('');
-//   const [checkOut,setCheckOut] = useState('');
-//   const [maxGuests,setMaxGuests] = useState(1);
-//   const [price,setPrice] = useState(100);
-//   const [redirect,setRedirect] = useState(false);
-//   useEffect(() => {
-//     if (!id) {
-//       return;
-//     }
-//     axios.get('/places/'+id).then(response => {
-//        const {data} = response;
-//        setTitle(data.title);
-//        setAddress(data.address);
-//        setAddedPhotos(data.photos);
-//        setDescription(data.description);
-//        setPerks(data.perks);
-//        setExtraInfo(data.extraInfo);
-//        setCheckIn(data.checkIn);
-//        setCheckOut(data.checkOut);
-//        setMaxGuests(data.maxGuests);
-//        setPrice(data.price);
-//     });
-//   }, [id]);
-//   function inputHeader(text) {
-//     return (
-//       <h2 className="text-2xl mt-4">{text}</h2>
-//     );
-//   }
-//   function inputDescription(text) {
-//     return (
-//       <p className="text-gray-500 text-sm">{text}</p>
-//     );
-//   }
-//   function preInput(header,description) {
-//     return (
-//       <>
-//         {inputHeader(header)}
-//         {inputDescription(description)}
-//       </>
-//     );
-//   }
-//   const [selectedOption, setSelectedOption] = useState('pg');
-
-//   const handleOptionChange = (event) => {
-//     setSelectedOption(event.target.value);
-//   };
-
-//   async function savePlace(ev) {
-//     ev.preventDefault();
-//     const placeData = {
-//       title,selectedOption, address, addedPhotos,
-//       description, perks, extraInfo,
-//       checkIn, checkOut, maxGuests, price,
-//     };
-//     if (id) {
-//       // update
-//       await axios.put('/places', {
-//         id, ...placeData
-//       });
-//       setRedirect(true);
-//     } else {
-//       // new place
-//       await axios.post('/places', placeData);
-//       setRedirect(true);
-//     }
-
-//   }
-
-//   if (redirect) {
-//     return <Navigate to={'/account/places'} />
-//   }
-
-//   return (
-//     <div>
-//       <AccountNav />
-//       <form onSubmit={savePlace}>
-//         {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
-//         <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt"/>
-//         {/* --------------------- */}
-//         <h2 className="text-2xl font-bold mb-4">Choose an Option</h2>
-//         <div className="space-y-2">
-//         <label className="flex items-center">
-//           <input
-//             type="radio"
-//             value="PG"
-//             checked={selectedOption === 'PG'}
-//             onChange={handleOptionChange}
-//             className="form-radio h-4 w-4 text-blue-600"
-//           />
-//           <span className="ml-2 text-gray-700">PG</span>
-//           </label>
-//           <label className="flex items-center">
-//           <input
-//             type="radio"
-//             value="Food"
-//             checked={selectedOption === 'Food'}
-//             onChange={handleOptionChange}
-//             className="form-radio h-4 w-4 text-blue-600"
-//           />
-//           <span className="ml-2 text-gray-700">Food</span>
-//           </label>
-//           <label className="flex items-center">
-//           <input
-//             type="radio"
-//             value="Fun Places"
-//             checked={selectedOption === 'Fun Places'}
-//             onChange={handleOptionChange}
-//             className="form-radio h-4 w-4 text-blue-600"
-//           />
-//           <span className="ml-2 text-gray-700">Fun Places</span>
-//         </label>
-//       </div>
-//       {/* ----------------------- */}
-        
-//         {preInput('Address', 'Address to this place')}
-//         <input type="text" value={address} onChange={ev => setAddress(ev.target.value)}placeholder="address"/>
-//         {preInput('Photos','more = better')}
-//         <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
-//         {preInput('Description','description of the place')}
-//         <textarea value={description} onChange={ev => setDescription(ev.target.value)} />
-//         {preInput('Perks','select all the perks of your place')}
-//         <div className="grid mt-2 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-//           <Perks selected={perks} onChange={setPerks} />
-//         </div>
-//         {preInput('Extra info','house rules, etc')}
-//         <textarea value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
-//         {preInput('Check in&out times','add check in and out times, remember to have some time window for cleaning the room between guests')}
-//         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
-//           <div>
-//             <h3 className="mt-2 -mb-1">Check in time</h3>
-//             <input type="text"
-//                    value={checkIn}
-//                    onChange={ev => setCheckIn(ev.target.value)}
-//                    placeholder="14"/>
-//           </div>
-//           <div>
-//             <h3 className="mt-2 -mb-1">Check out time</h3>
-//             <input type="text"
-//                    value={checkOut}
-//                    onChange={ev => setCheckOut(ev.target.value)}
-//                    placeholder="11" />
-//           </div>
-//           <div>
-//             <h3 className="mt-2 -mb-1">Max number of guests</h3>
-//             <input type="number" value={maxGuests}
-//                    onChange={ev => setMaxGuests(ev.target.value)}/>
-//           </div>
-//           <div>
-//             <h3 className="mt-2 -mb-1">Price per night</h3>
-//             <input type="number" value={price}
-//                    onChange={ev => setPrice(ev.target.value)}/>
-//           </div>
-//         </div>
-//         <button className="primary my-4">Save</button>
-//       </form>
-//     </div>
-//   );
-// }
-
 import PhotosUploader from "../PhotosUpload.js";
 import Perks from "../Perks.js";
-import { useEffect, useState, useContext } from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import AccountNav from "../AccountNav";
-import { Navigate, useParams } from "react-router-dom";
-import { UserContext } from "../UserContext"; // Adjust the path as necessary
+import {Navigate, useParams} from "react-router-dom";
+import { UserContext } from "../Usercontext.js";
+
 
 export default function PlacesFormPage() {
-  const { id } = useParams();
-  const { user } = useContext(UserContext); // Assuming UserContext provides user info
-  const [title, setTitle] = useState('');
-  const [address, setAddress] = useState('');
-  const [addedPhotos, setAddedPhotos] = useState([]);
-  const [description, setDescription] = useState('');
-  const [perks, setPerks] = useState([]);
-  const [extraInfo, setExtraInfo] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [maxGuests, setMaxGuests] = useState(1);
-  const [price, setPrice] = useState(100);
-  const [redirect, setRedirect] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('pg');
-
+  const {id} = useParams();
+  const [title,setTitle] = useState('');
+  const [address,setAddress] = useState('');
+  const [addedPhotos,setAddedPhotos] = useState([]);
+  const [description,setDescription] = useState('');
+  const [perks,setPerks] = useState([]);
+  const [extraInfo,setExtraInfo] = useState('');
+  const [checkIn,setCheckIn] = useState('');
+  const [checkOut,setCheckOut] = useState('');
+  const [maxGuests,setMaxGuests] = useState(1);
+  const [price,setPrice] = useState(100);
+  const [redirect,setRedirect] = useState(false);
+ const {user} = useContext(UserContext)
   useEffect(() => {
     if (!id) {
       return;
     }
-    axios.get('/places/' + id).then(response => {
-      const { data } = response;
-      setTitle(data.title);
-      setAddress(data.address);
-      setAddedPhotos(data.photos);
-      setDescription(data.description);
-      setPerks(data.perks);
-      setExtraInfo(data.extraInfo);
-      setCheckIn(data.checkIn);
-      setCheckOut(data.checkOut);
-      setMaxGuests(data.maxGuests);
-      setPrice(data.price);
+    axios.get('/places/'+id).then(response => {
+       const {data} = response;
+       setTitle(data.title);
+       setAddress(data.address);
+       setAddedPhotos(data.photos);
+       setDescription(data.description);
+       setPerks(data.perks);
+       setExtraInfo(data.extraInfo);
+       setCheckIn(data.checkIn);
+       setCheckOut(data.checkOut);
+       setMaxGuests(data.maxGuests);
+       setPrice(data.price);
     });
   }, [id]);
-
   function inputHeader(text) {
     return (
       <h2 className="text-2xl mt-4">{text}</h2>
     );
   }
-
   function inputDescription(text) {
     return (
       <p className="text-gray-500 text-sm">{text}</p>
     );
   }
-
-  function preInput(header, description) {
+  function preInput(header,description) {
     return (
       <>
         {inputHeader(header)}
@@ -236,6 +58,7 @@ export default function PlacesFormPage() {
       </>
     );
   }
+  const [selectedOption, setSelectedOption] = useState('pg');
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -244,29 +67,30 @@ export default function PlacesFormPage() {
   async function savePlace(ev) {
     ev.preventDefault();
     const placeData = {
-      title, selectedOption, address, addedPhotos,
+      title,selectedOption, address, addedPhotos,
       description, perks, extraInfo,
       checkIn, checkOut, maxGuests, price,
     };
     if (id) {
       // update
+      if(user.email === 'aniket@gmail.com'){
       await axios.put('/places', {
         id, ...placeData
       });
+      }
       setRedirect(true);
     } else {
       // new place
+      if(user.email === 'aniket@gmail.com'){
       await axios.post('/places', placeData);
+      }
       setRedirect(true);
     }
+
   }
 
   if (redirect) {
     return <Navigate to={'/account/places'} />
-  }
-
-  if (user.email !== 'aniket@gmail.com') {
-    return <Navigate to={'/unauthorized'} />; // Redirect to an unauthorized page or show a message
   }
 
   return (
@@ -274,84 +98,98 @@ export default function PlacesFormPage() {
       <AccountNav />
       <form onSubmit={savePlace}>
         {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
-        <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt" />
+        <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt"/>
         {/* --------------------- */}
         <h2 className="text-2xl font-bold mb-4">Choose an Option</h2>
         <div className="space-y-2">
-          <label className="flex items-center">
-            <input
-              type="radio"
-              value="PG"
-              checked={selectedOption === 'PG'}
-              onChange={handleOptionChange}
-              className="form-radio h-4 w-4 text-blue-600"
-            />
-            <span className="ml-2 text-gray-700">PG</span>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            value="PG"
+            checked={selectedOption === 'PG'}
+            onChange={handleOptionChange}
+            className="form-radio h-4 w-4 text-blue-600"
+          />
+          <span className="ml-2 text-gray-700">PG</span>
           </label>
           <label className="flex items-center">
-            <input
-              type="radio"
-              value="Food"
-              checked={selectedOption === 'Food'}
-              onChange={handleOptionChange}
-              className="form-radio h-4 w-4 text-blue-600"
-            />
-            <span className="ml-2 text-gray-700">Food</span>
+          <input
+            type="radio"
+            value="Food"
+            checked={selectedOption === 'Food'}
+            onChange={handleOptionChange}
+            className="form-radio h-4 w-4 text-blue-600"
+          />
+          <span className="ml-2 text-gray-700">Food</span>
           </label>
           <label className="flex items-center">
-            <input
-              type="radio"
-              value="Fun Places"
-              checked={selectedOption === 'Fun Places'}
-              onChange={handleOptionChange}
-              className="form-radio h-4 w-4 text-blue-600"
-            />
-            <span className="ml-2 text-gray-700">Fun Places</span>
-          </label>
-        </div>
-        {/* ----------------------- */}
-
+          <input
+            type="radio"
+            value="Fun Places"
+            checked={selectedOption === 'Fun Places'}
+            onChange={handleOptionChange}
+            className="form-radio h-4 w-4 text-blue-600"
+          />
+          <span className="ml-2 text-gray-700">Fun Places</span>
+        </label>
+      </div>
+      {/* ----------------------- */}
+        
         {preInput('Address', 'Address to this place')}
-        <input type="text" value={address} onChange={ev => setAddress(ev.target.value)} placeholder="address" />
-        {preInput('Photos', 'more = better')}
+        <input type="text" value={address} onChange={ev => setAddress(ev.target.value)}placeholder="address"/>
+        {preInput('Photos','more = better')}
         <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
-        {preInput('Description', 'description of the place')}
+        {preInput('Description','description of the place')}
         <textarea value={description} onChange={ev => setDescription(ev.target.value)} />
-        {preInput('Perks', 'select all the perks of your place')}
+        {preInput('Perks','select all the perks of your place')}
         <div className="grid mt-2 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           <Perks selected={perks} onChange={setPerks} />
         </div>
-        {preInput('Extra info', 'house rules, etc')}
+        {preInput('Extra info','house rules, etc')}
         <textarea value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
-        {preInput('Check in&out times', 'add check in and out times, remember to have some time window for cleaning the room between guests')}
+        {preInput('Check in&out times','add check in and out times, remember to have some time window for cleaning the room between guests')}
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
           <div>
             <h3 className="mt-2 -mb-1">Check in time</h3>
             <input type="text"
-              value={checkIn}
-              onChange={ev => setCheckIn(ev.target.value)}
-              placeholder="14" />
+                   value={checkIn}
+                   onChange={ev => setCheckIn(ev.target.value)}
+                   placeholder="14"/>
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Check out time</h3>
             <input type="text"
-              value={checkOut}
-              onChange={ev => setCheckOut(ev.target.value)}
-              placeholder="11" />
+                   value={checkOut}
+                   onChange={ev => setCheckOut(ev.target.value)}
+                   placeholder="11" />
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Max number of guests</h3>
             <input type="number" value={maxGuests}
-              onChange={ev => setMaxGuests(ev.target.value)} />
+                   onChange={ev => setMaxGuests(ev.target.value)}/>
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Price per night</h3>
             <input type="number" value={price}
-              onChange={ev => setPrice(ev.target.value)} />
+                   onChange={ev => setPrice(ev.target.value)}/>
           </div>
         </div>
-        <button className="primary my-4">Save</button>
+        <button
+      className="primary my-4"
+      onClick={(ev) => {
+    ev.preventDefault();
+    if (user.email === 'aniket@gmail.com' || user.role === 'admin') {
+      savePlace(ev);
+    } else {
+      alert('Only aniket@gmail.com or an admin can save this form.');
+    }
+  }}
+>
+  Save
+</button>
+
       </form>
     </div>
   );
 }
+
