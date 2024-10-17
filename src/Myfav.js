@@ -5,9 +5,9 @@ export default function MyfavouriteList(){
             <AccountNav/>
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
          <div className="text-center p-6 bg-white rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold mb-4 text-gray-800">Under Maintenance</h1>
+        <h1 className="text-4xl font-bold mb-4 text-gray-800">Under development</h1>
         <p className="text-lg text-gray-600 mb-6">
-          This page is still under devlopment. Please check back later.
+          This page is still under development. Please check back later.
         </p>
         <div className="flex justify-center">
           <img
